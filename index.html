@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>금속과 금속 염 수용액의 반응 관찰하기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@600;700&family=STIX+Two+Text:ital@1&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mint:#5dc2b0; --mint-deep:#23907f; --mint-soft:#e3f5f1;
+  --yellow:#f4c33b; --salmon:#e9966b; --num:#e8843a;
+  --ink:#231f20; --muted:#646b6c; --line:#d9dddc;
+  --paper:#fff; --panel:#f5f8f7; --stage:#fcfdfd;
+  --gray-tag:#98a2a2; --danger:#e1251b; --safety:#1c5d8c; --safety-soft:#e4eef5;
+  --zone:#f3f6f6; --shelf:#cdb894;
+  --plate-top:#f2f7f8; --plate-edge:#dfe8ea; --plate-stroke:#bfccd0;
+  --well-back:#e7eff1; --well-floor:#dbe6e9; --well-front:rgba(255,255,255,.30); --rim:#a9b8bc;
+  --glass:rgba(234,244,247,.75); --pill:#8d9796; --na:#e7eaea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --mint-soft:#1d3833; --ink:#e8edec; --muted:#a2acab; --line:#38423f;
+    --paper:#121817; --panel:#1b2322; --stage:#161e1d;
+    --safety:#6aa6d4; --safety-soft:#1d2e3b;
+    --zone:#1c2524; --shelf:#6b5b42;
+    --plate-top:#25302f; --plate-edge:#1e2726; --plate-stroke:#4a5856;
+    --well-back:#1f2928; --well-floor:#1a2322; --well-front:rgba(255,255,255,.06); --rim:#617170;
+    --glass:rgba(200,220,226,.35); --pill:#5f6a69; --na:#283130;
+  }
+}
+:root[data-theme="dark"]{
+  --mint-soft:#1d3833; --ink:#e8edec; --muted:#a2acab; --line:#38423f;
+  --paper:#121817; --panel:#1b2322; --stage:#161e1d;
+  --safety:#6aa6d4; --safety-soft:#1d2e3b;
+  --zone:#1c2524; --shelf:#6b5b42;
+  --plate-top:#25302f; --plate-edge:#1e2726; --plate-stroke:#4a5856;
+  --well-back:#1f2928; --well-floor:#1a2322; --well-front:rgba(255,255,255,.06); --rim:#617170;
+  --glass:rgba(200,220,226,.35); --pill:#5f6a69; --na:#283130;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit}
+button:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.ch{white-space:nowrap}
+.ch i{font-family:'STIX Two Text','Times New Roman',serif;font-style:italic}
+.ch sub{font-size:.72em;line-height:0}
+
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 18px calc(14px + env(safe-area-inset-bottom,0px))}
+
+/* 상단 */
+.top{display:flex;align-items:center;flex:0 0 auto;margin-bottom:10px}
+.badges{display:flex;align-items:center}
+.badge{border-radius:50%;display:grid;place-items:center;font-weight:800;flex:0 0 auto}
+.b1{width:62px;height:62px;background:var(--mint);color:#fff;font-size:15px}
+.b2{width:48px;height:48px;background:var(--yellow);color:#231f20;font-size:13px;margin-left:-6px}
+.dotline{flex:0 0 80px;height:0;border-top:4px dotted var(--mint);margin:0 12px}
+.prog{flex:1 1 auto;position:relative;height:18px;display:flex;align-items:center}
+.prog-track{position:relative;width:100%;height:7px;border-radius:4px;background:var(--mint-soft)}
+.prog-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:4px;background:var(--mint);transition:width .5s}
+.prog-knob{position:absolute;top:50%;left:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--mint-deep);border:3px solid var(--paper);box-shadow:0 0 0 2px var(--mint);transition:left .5s}
+.prog-end{flex:0 0 70px;height:7px;border-radius:4px;background:var(--mint);margin-left:16px}
+
+/* 본문 */
+.body{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:230px 1fr;gap:18px}
+.side{overflow:auto;padding:4px 4px 4px 2px;font-size:14px}
+.side h2{font-size:16px;font-weight:800;margin:2px 0 10px}
+.prep ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.prep li{display:flex;flex-wrap:wrap;gap:6px 16px;line-height:1.4}
+.pi{display:flex;gap:8px;align-items:flex-start;transition:color .3s}
+.box{flex:0 0 16px;height:16px;margin-top:2px;border:1.6px solid var(--muted);border-radius:3px;display:grid;place-items:center;transition:background .3s,border-color .3s}
+.pi.done{color:var(--mint-deep)}
+.pi.done .box{background:var(--mint);border-color:var(--mint)}
+.pi.done .box::after{content:"";width:8px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(-45deg)}
+.caution{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+.caution svg{width:22px;height:22px;display:block;margin-bottom:6px}
+.caution ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.5;color:var(--ink)}
+.caution li{position:relative;padding-left:12px}
+.caution li::before{content:"";position:absolute;left:0;top:.62em;width:4px;height:4px;border-radius:50%;background:var(--muted)}
+.safety{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.sf{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--safety);display:grid;place-items:center;color:var(--safety);background:var(--paper);transition:opacity .3s,background .3s}
+.sf svg{width:28px;height:28px}
+.sf.gear{opacity:.32}
+.sf.gear.on{opacity:1;background:var(--safety-soft)}
+.sf.tox{border:none;background:none}
+.sf.tox svg{width:38px;height:38px}
+
+.main{display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
+.titlebox h1{font-size:clamp(20px,2.1vw,28px);font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.goal{margin:0;display:flex;gap:12px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;line-height:1.55}
+.goal b{font-family:'Noto Sans KR',sans-serif;font-weight:800;flex:0 0 auto}
+
+.stage{position:relative;flex:1 1 auto;min-height:280px;border-radius:22px;background:var(--stage);border:1px solid var(--line);overflow:hidden}
+#svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+.sbtns{position:absolute;display:flex;gap:8px;z-index:3}
+.sbtns.tr{top:12px;right:12px}
+.sbtns.bl{left:12px;bottom:12px}
+.pill{min-height:48px;padding:0 20px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:15px;font-weight:700;cursor:pointer}
+.pill.on{background:var(--mint-soft);border-color:var(--mint);color:var(--mint-deep)}
+.pill:disabled{opacity:.4;cursor:default}
+.toast{position:absolute;top:14px;left:50%;transform:translate(-50%,-14px);max-width:min(70%,520px);padding:11px 20px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:500;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:5}
+.toast.show{opacity:.95;transform:translate(-50%,0)}
+
+/* 정리 시트 */
+.sheet{position:absolute;top:0;right:0;bottom:0;width:min(400px,44%);z-index:6;background:var(--paper);border-left:1px solid var(--line);border-radius:22px 0 0 22px;box-shadow:-10px 0 30px rgba(0,0,0,.12);transform:translateX(104%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+.sheet.open{transform:none}
+.sheet-head{display:flex;align-items:center;gap:10px;padding:12px 12px 4px 18px}
+.sheet-head .pill{margin-left:auto}
+.sheet-body{overflow:auto;padding:2px 18px 18px}
+.q{font-family:'Noto Serif KR',serif;font-weight:600;font-size:clamp(14.5px,1.35vw,17px);margin:6px 0 10px;display:flex;gap:8px;line-height:1.5}
+.qn{font-family:'Noto Sans KR',sans-serif;font-weight:800;color:var(--num)}
+.rtbl{border-collapse:collapse;width:100%;font-size:14.5px;margin-bottom:14px}
+.rtbl th,.rtbl td{border:1px solid var(--line);padding:3px;text-align:center}
+.rtbl thead th{background:var(--mint-soft);font-family:'Noto Serif KR',serif;font-weight:600;padding:6px 3px}
+.rtbl tbody th{font-weight:500;white-space:nowrap;padding:0 6px}
+.rtbl td.na{background:var(--na)}
+.mark{width:100%;min-height:48px;border:none;background:none;color:var(--ink);font-size:18px;cursor:pointer;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:2px}
+.mark .o{display:inline-block;width:24px;text-align:center;color:var(--mint-deep);font-weight:700;font-size:20px}
+.mark[aria-pressed="true"]{background:var(--mint-soft)}
+.cheer{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:hidden}
+.cheer .clap{position:absolute;left:50%;top:46%;font-size:min(22vh,150px);line-height:1;transform:translate(-50%,-50%);animation:clap .38s ease-in-out 5,fadeout .5s ease-in 1.9s forwards}
+.cheer i{position:absolute;top:-16px;width:10px;height:16px;border-radius:2px;animation:fall linear forwards}
+@keyframes clap{0%,100%{transform:translate(-50%,-50%) scale(1) rotate(0)}50%{transform:translate(-50%,-50%) scale(1.18) rotate(-8deg)}}
+@keyframes fadeout{to{opacity:0}}
+@keyframes fall{to{top:105%;opacity:.2}}
+@media (max-width:600px){ .sheet{width:100%;border-radius:22px} }
+.note{margin:6px 0 0;color:var(--mint-deep);font-weight:700}
+
+/* 안내 패널 */
+.guide{flex:0 0 auto;background:var(--panel);border-radius:20px;padding:12px 18px 14px}
+.ghead{display:flex;align-items:center;gap:12px}
+.tag{display:inline-block;padding:4px 13px;border-radius:999px;background:var(--salmon);color:#fff;font-size:13px;font-weight:700}
+.tag.gray{background:var(--gray-tag)}
+.tag.mint{background:var(--mint)}
+.count{color:var(--muted);font-size:14px}
+.count b{color:var(--ink)}
+.next{margin-left:auto;min-height:48px;padding:0 24px;border-radius:999px;border:none;background:var(--line);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;transition:background .3s,color .3s}
+.next.ready{background:var(--mint);color:#fff}
+.next.blink{animation:blink .45s ease-in-out 2}
+@keyframes blink{50%{transform:scale(1.07);box-shadow:0 0 0 6px var(--mint-soft)}}
+.stext{margin:8px 0 4px;display:flex;gap:10px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:clamp(17px,1.75vw,22px);line-height:1.45}
+.snum{font-family:'Noto Sans KR',sans-serif;font-weight:800;color:var(--num)}
+.hint{margin:0;color:var(--muted);font-size:14px;line-height:1.5;padding-left:26px}
+
+/* SVG 요소 */
+.hid{display:none}
+.zone{fill:var(--zone);stroke:var(--line);stroke-width:1.5;stroke-dasharray:6 6}
+.shadow{fill:rgba(0,0,0,.07)}
+.plate-top{fill:var(--plate-top);stroke:var(--plate-stroke);stroke-width:2}
+.plate-edge{fill:var(--plate-edge);stroke:var(--plate-stroke);stroke-width:2}
+.well-back{fill:var(--well-back);stroke:var(--plate-stroke);stroke-width:1.2}
+.well-floor{fill:var(--well-floor)}
+.well-front{fill:var(--well-front);pointer-events:none}
+.well-rim{fill:none;stroke:var(--rim);stroke-width:1.6;transition:stroke .2s}
+.well-rim.hot{stroke:var(--yellow);stroke-width:4}
+.lvl{fill:none;stroke:var(--num);stroke-width:1.8;stroke-dasharray:4 3}
+.lbl{fill:var(--ink);font-size:19px;font-weight:600}
+.lbl-s{fill:var(--muted);font-size:12.5px;font-weight:500}
+.col-pill{fill:var(--pill)}
+.col-txt{fill:#fff;font-size:18px;font-weight:700;font-family:'Noto Serif KR',serif}
+.gear-bg{fill:var(--mint-soft);stroke:var(--mint);stroke-width:2.5}
+.gear-ic{color:var(--safety)}
+.gear-item,.shelf-item,.waste{cursor:pointer}
+.gone{opacity:0;pointer-events:none;transition:opacity .35s}
+.shelf{fill:var(--shelf)}
+.glass-tube{fill:var(--glass);stroke:#9fb2b8;stroke-width:1.2}
+.bottle-glass{fill:url(#gGlass);stroke:#97abb2;stroke-width:1.5}
+.bottle-brown{fill:url(#gBrown);stroke:#5a3714;stroke-width:1.5}
+.bottle-label{fill:#fff;stroke:#c8d0d0;stroke-width:1}
+.blabel{fill:#231f20;font-size:10.5px;font-weight:700}
+.bottle-hot{fill:none;stroke:var(--yellow);stroke-width:3;stroke-dasharray:8 5}
+.timer{fill:var(--muted);font-size:16px;font-weight:500}
+.timer .mono{font-family:'Share Tech Mono',monospace;font-size:22px;fill:var(--ink)}
+.waste-body{fill:var(--paper);stroke:var(--safety);stroke-width:3}
+.waste-txt{fill:var(--safety);font-size:16px;font-weight:800}
+[data-drag]{cursor:grab}
+.grabbing,.grabbing *{cursor:grabbing !important}
+.pop{animation:pop .5s cubic-bezier(.2,.8,.3,1.15)}
+@keyframes pop{from{opacity:0;transform:translateY(-36px)}to{opacity:1;transform:none}}
+
+/* 세로 화면·좁은 화면 */
+@media (max-width:900px), (orientation:portrait){
+  .app{height:auto;min-height:100dvh}
+  .body{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:start;gap:12px}
+  .side{overflow:visible}
+  .prep ul{flex-direction:row;flex-wrap:wrap;gap:6px 16px}
+  .caution{display:none}
+  .safety{margin-top:10px}
+  .stage{flex:0 0 auto;aspect-ratio:5/3;min-height:0}
+  .dotline{flex-basis:40px}
+  .prog-end{flex-basis:40px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- 아이콘 모음 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="ic-coat" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"><path d="M18 7 L24 14 L30 7 L37 10 Q40 11 40.5 15 L42 31 L36.5 31.5 L35.5 21 L35.5 42 L12.5 42 L12.5 21 L11.5 31.5 L6 31 L7.5 15 Q8 11 11 10 Z"/><path d="M18 7 L21 25 L24 14 L27 25 L30 7"/><path d="M24 25 V42"/><path d="M28.5 31 H32.5"/></g></symbol>
+    <symbol id="ic-goggle" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"><path d="M7 19 Q7 14 13 14 H35 Q41 14 41 19 V26 Q41 33 34 33 Q29 33 27 29 Q24 25 21 29 Q19 33 14 33 Q7 33 7 26 Z"/><path d="M7 21 H3.5 M41 21 H44.5"/><path d="M12 19.5 H36" opacity=".55"/></g></symbol>
+    <symbol id="ic-glove" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"><path d="M15.5 43 V27 L11 21 Q9 18 11.5 16.5 Q13.8 15.3 15.8 17.8 L18.5 21 V9 Q18.5 6.5 21 6.5 Q23.3 6.5 23.3 9 V20 M23.3 9 V6.8 Q23.3 4.3 25.7 4.3 Q28.2 4.3 28.2 6.8 V20 M28.2 9 Q28.2 6.4 30.5 6.4 Q33 6.4 33 8.8 V21 M33 13 Q33 10.8 35.2 10.8 Q37.4 10.8 37.4 13 V30 Q37.4 37.5 32.5 43 Z"/></g></symbol>
+    <symbol id="ic-skull" viewBox="0 0 48 48"><path d="M24 8 Q34 8 34 18 Q34 22.5 31 24.5 V29 H17 V24.5 Q14 22.5 14 18 Q14 8 24 8 Z" fill="currentColor"/><circle cx="20" cy="18.5" r="2.8" fill="#fff"/><circle cx="28" cy="18.5" r="2.8" fill="#fff"/><path d="M21 29 V25.8 M24 29 V25.8 M27 29 V25.8" stroke="#fff" stroke-width="1.4"/><path d="M11 32 L37 41 M37 32 L11 41" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></symbol>
+    <symbol id="ic-tox" viewBox="0 0 48 48"><path d="M24 2.5 L45.5 24 L24 45.5 L2.5 24 Z" fill="#fff" stroke="#e1251b" stroke-width="3.4" stroke-linejoin="round"/><g transform="translate(24 25) scale(.56) translate(-24 -24.5)" style="color:#231f20"><use href="#ic-skull"/></g></symbol>
+    <symbol id="ic-waste" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"><path d="M13 17 H30 L36 23 V42 H13 Z"/><path d="M17 17 V12 H25 V17"/><path d="M30 17 L32 12 H36"/></g><g transform="translate(24.5 31) scale(.36) translate(-24 -24.5)"><use href="#ic-skull"/></g></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="badges"><span class="badge b1">해 보기</span><span class="badge b2">실험</span></div>
+    <div class="dotline"></div>
+    <div class="prog" aria-hidden="true"><div class="prog-track"><div class="prog-fill" id="progFill"></div><div class="prog-knob" id="progKnob"></div></div></div>
+    <div class="prog-end"></div>
+  </header>
+
+  <div class="body">
+    <aside class="side">
+      <section class="prep">
+        <h2>준비물</h2>
+        <ul>
+          <li><span class="pi" data-k="ag"><span class="box"></span><span>은(<span class="ch">Ag(<i>s</i>)</span>)판</span></span></li>
+          <li><span class="pi" data-k="cu"><span class="box"></span><span>구리(<span class="ch">Cu(<i>s</i>)</span>)판</span></span></li>
+          <li><span class="pi" data-k="zn"><span class="box"></span><span>아연(<span class="ch">Zn(<i>s</i>)</span>)판</span></span></li>
+          <li><span class="pi" data-k="znso4"><span class="box"></span><span>황산 아연 수용액 (<span class="ch">ZnSO<sub>4</sub>(<i>aq</i>)</span>)</span></span></li>
+          <li><span class="pi" data-k="cuso4"><span class="box"></span><span>황산 구리(Ⅱ) 수용액 (<span class="ch">CuSO<sub>4</sub>(<i>aq</i>)</span>)</span></span></li>
+          <li><span class="pi" data-k="agno3"><span class="box"></span><span>질산 은 수용액 (<span class="ch">AgNO<sub>3</sub>(<i>aq</i>)</span>)</span></span></li>
+          <li><span class="pi" data-k="plate"><span class="box"></span><span>12홈판</span></span><span class="pi" data-k="dropper"><span class="box"></span><span>스포이트</span></span></li>
+          <li><span class="pi" data-k="sand"><span class="box"></span><span>사포</span></span></li>
+        </ul>
+      </section>
+      <section class="caution">
+        <svg viewBox="0 0 24 24" aria-label="주의"><path d="M12 2.5 L22.5 21 H1.5 Z" fill="none" stroke="#e1251b" stroke-width="2" stroke-linejoin="round"/><path d="M12 9 V14.5" stroke="#e1251b" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.3" fill="#e1251b"/></svg>
+        <ul>
+          <li>실험복, 보안경, 실험용 장갑을 착용한다.</li>
+          <li>금속판은 사포로 문질러 표면의 불순물을 제거한 후 사용한다.</li>
+          <li>시약이 피부나 옷에 묻지 않도록 주의한다.</li>
+          <li>실험 후 남은 용액은 폐수 처리 기준과 방법에 따라 처리한다.</li>
+        </ul>
+      </section>
+      <div class="safety">
+        <span class="sf gear" data-sf="coat" title="실험복"><svg><use href="#ic-coat"/></svg></span>
+        <span class="sf gear" data-sf="goggle" title="보안경"><svg><use href="#ic-goggle"/></svg></span>
+        <span class="sf gear" data-sf="glove" title="실험용 장갑"><svg><use href="#ic-glove"/></svg></span>
+        <span class="sf tox"><svg><use href="#ic-tox"/></svg></span>
+        <span class="sf"><svg><use href="#ic-waste"/></svg></span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="titlebox">
+        <h1>금속과 금속 염 수용액의 반응 관찰하기</h1>
+        <p class="goal"><b>목표</b><span>금속과 금속 염 수용액의 반응을 통해 금속의 산화·환원 반응에서의 금속 반응성의 상대적인 크기를 비교할 수 있다.</span></p>
+      </div>
+
+      <div class="stage" id="stage">
+        <svg id="svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="실험대"></svg>
+        <div class="sbtns tr">
+          <button class="pill" id="zoomBtn">확대해서 보기</button>
+          <button class="pill" id="sheetBtn" disabled>정리</button>
+        </div>
+        <div class="sbtns bl"><button class="pill" id="resetBtn">처음부터</button></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+        <div class="sheet" id="sheet" aria-hidden="true">
+          <div class="sheet-head">
+            <span class="tag mint">정리</span>
+            <button class="pill" id="sheetClose">닫기</button>
+          </div>
+          <div class="sheet-body">
+            <p class="q"><span class="qn">1</span><span>반응이 일어나는 홈에 ○표 하고, 화학 반응식을 써 보자.</span></p>
+            <table class="rtbl" id="rtbl"></table>
+            <p class="q"><span class="qn">2</span><span>실험 결과로부터 Ag, Cu, Zn을 산화되기 쉬운 순서대로 나열해 보자.</span></p>
+            <p class="note">반응식과 답은 학습지에 기록하자.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide">
+        <div class="ghead">
+          <span class="tag gray" id="tag">준비</span>
+          <span class="count"><b id="cur">1</b> / <span id="tot">12</span></span>
+          <button class="next" id="nextBtn">다음 단계</button>
+        </div>
+        <p class="stext"><span class="snum" id="snum">1</span><span id="stext"></span></p>
+        <p class="hint" id="hint"></p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ===== 교사용 설정값 ===== */
+const CFG = {
+  rubNeed: 750,      // 금속판 한 장을 사포질하는 데 필요한 문지름 거리(클수록 여러 번 문질러야 함)
+  drawTime: 1.0,     // 스포이트로 용액을 가득 빨아올리는 데 걸리는 시간(초, 누르고 있는 시간)
+  fillTime: 1.6,     // 홈 하나를 점선 눈금까지 채우는 데 걸리는 시간(초, 누르고 있는 시간)
+  reactSec: 24,      // 반응이 끝까지 진행되는 데 걸리는 시간(초, 실제 시간을 압축한 값)
+  realMinutes: 10,   // reactSec가 실제로 몇 분에 해당하는지(경과 시간 표시용)
+  observeMin: 0.5,   // 관찰 단계 완료에 필요한 최소 반응 진행 정도(0~1)
+  zoomNeed: 3,       // 관찰 단계에서 확대해서 봐야 하는 시간(초)
+  depositMax: 1.0,   // 금속판에 석출되는 금속의 최대 양(0~1)
+  cuFade: 0.35,      // 아연판과 반응한 황산 구리(Ⅱ) 수용액의 푸른색이 옅어지는 정도(0~1)
+  agCuBlue: 0.5,     // 구리판과 반응한 질산 은 수용액이 띠는 푸른색의 진하기(0~1)
+  snapDist: 60,      // 금속판·스포이트가 자리에 붙는 거리
+  clapSound: true    // 정리 ○표를 모두 맞혔을 때 박수 소리(false면 소리 없이 박수 그림만)
+};
+
+/* ===== 단계 ===== */
+const STEPS = [
+  {tag:'준비', cls:'gray', kind:'gear', text:'실험복, 보안경, 실험용 장갑을 착용한다.', hint:'실험대 위의 안전 장비를 하나씩 눌러 착용하자.', ok:'안전 장비를 모두 착용했다.'},
+  {tag:'준비', cls:'gray', kind:'move', text:'준비물을 실험대로 옮긴다.', hint:'선반 위의 준비물을 하나씩 눌러 실험대로 옮기자.', ok:'준비물을 모두 실험대로 옮겼다.'},
+  {tag:'준비', cls:'gray', kind:'sand', text:'금속판을 사포로 문질러 표면의 불순물을 제거한다.', hint:'사포를 끌어서 금속판 여섯 장 위를 여러 번 문질러 보자.', ok:'금속판 표면이 깨끗해졌다.'},
+  {tag:'과정 1', cls:'', kind:'sol', sol:'ZnSO4', text:'스포이트로 황산 아연 수용액을 분홍색 점선 상자 안의 두 홈에 넣는다.', hint:'병에 꽂힌 스포이트를 누르고 있어 용액을 빨아올린 뒤, 끌어서 홈 위에서 누르고 있어 점선 눈금까지 채우자.', ok:'황산 아연 수용액을 두 홈에 넣었다.'},
+  {tag:'과정 2', cls:'', kind:'sol', sol:'CuSO4', text:'스포이트로 황산 구리(Ⅱ) 수용액을 노란색 점선 상자 안의 두 홈에 넣는다.', hint:'병에 꽂힌 스포이트를 누르고 있어 용액을 빨아올린 뒤, 끌어서 홈 위에서 누르고 있어 점선 눈금까지 채우자.', ok:'황산 구리(Ⅱ) 수용액을 두 홈에 넣었다.'},
+  {tag:'과정 3', cls:'', kind:'sol', sol:'AgNO3', text:'스포이트로 질산 은 수용액을 파란색 점선 상자 안의 두 홈에 넣는다.', hint:'병에 꽂힌 스포이트를 누르고 있어 용액을 빨아올린 뒤, 끌어서 홈 위에서 누르고 있어 점선 눈금까지 채우자.', ok:'질산 은 수용액을 두 홈에 넣었다.'},
+  {tag:'과정 4', cls:'', kind:'metal', metal:'Ag', text:'은판을 Ag 세로줄에서 용액이 든 두 홈에 하나씩 넣는다.', hint:'은판을 끌어서 홈 위에 놓아 보자. 가까이 가져가면 홈에 꽂힌다.', ok:'은판을 두 홈에 넣었다.'},
+  {tag:'과정 5', cls:'', kind:'metal', metal:'Cu', text:'구리판을 Cu 세로줄에서 용액이 든 두 홈에 하나씩 넣는다.', hint:'구리판을 끌어서 홈 위에 놓아 보자. 가까이 가져가면 홈에 꽂힌다.', ok:'구리판을 두 홈에 넣었다.'},
+  {tag:'과정 6', cls:'', kind:'metal', metal:'Zn', text:'아연판을 Zn 세로줄에서 용액이 든 두 홈에 하나씩 넣는다.', hint:'아연판을 끌어서 홈 위에 놓아 보자. 가까이 가져가면 홈에 꽂힌다.', ok:'아연판을 두 홈에 넣었다.'},
+  {tag:'과정 7', cls:'', kind:'obs', text:'금속판 표면과 수용액의 변화를 관찰한다.', hint:'[확대해서 보기]를 눌러 여섯 개 홈의 금속판 표면과 용액의 색을 자세히 살펴보자.', ok:'금속판과 수용액의 변화를 관찰했다.'},
+  {tag:'정리', cls:'mint', kind:'sheet', text:'실험 결과를 정리한다.', hint:'오른쪽 표의 ( )를 눌러 반응이 일어나는 홈에 ○표 해 보자. 모두 맞히면 다음 단계로 넘어갈 수 있다.', ok:'반응이 일어나는 홈을 모두 찾았다.'},
+  {tag:'뒷정리', cls:'gray', kind:'clean', text:'실험 후 남은 용액은 폐수 처리 기준과 방법에 따라 처리한다.', hint:'폐수통을 눌러 남은 용액을 모으고 금속판을 정리하자.', ok:'실험대를 깨끗이 정리했다.'}
+];
+
+/* ===== 장치 배치 ===== */
+const COLX = [425, 515, 605, 695], ROWY = [250, 335, 420];
+const RX = 36, RY = 13, DEPTH = 40, LEVEL = 28, LEAN = -14, STRIP_LEN = 115;
+const SOL_KEYS = ['ZnSO4', 'CuSO4', 'AgNO3'];
+const METAL_KEYS = ['Ag', 'Cu', 'Zn'];
+const SOLS = {
+  ZnSO4: {row:0, cols:[0,1], bx:80,  boxName:'분홍색', rgb:[200,226,236], a:.42, box:'#e0567d',
+          html:'<span class="ch">ZnSO<sub>4</sub>(<i>aq</i>)</span>', f:[['ZnSO'],['4','sub']]},
+  CuSO4: {row:1, cols:[0,2], bx:150, boxName:'노란색', rgb:[38,158,206],  a:.80, box:'#e9a919',
+          html:'<span class="ch">CuSO<sub>4</sub>(<i>aq</i>)</span>', f:[['CuSO'],['4','sub']]},
+  AgNO3: {row:2, cols:[1,2], bx:220, boxName:'파란색', rgb:[200,226,236], a:.42, box:'#3b5bb5',
+          html:'<span class="ch">AgNO<sub>3</sub>(<i>aq</i>)</span>', f:[['AgNO'],['3','sub']]}
+};
+const METALS = {
+  Ag: {col:0, rows:[0,1], name:'은판',   stroke:'#959ca2'},
+  Cu: {col:1, rows:[0,2], name:'구리판', stroke:'#a5582c'},
+  Zn: {col:2, rows:[1,2], name:'아연판', stroke:'#7b8890'}
+};
+/* 반응이 일어나는 조합(행-열): 실제 실험 결과 */
+const REACT = {'1-2':'CuZn', '2-1':'AgCu', '2-2':'AgZn'};
+const PREP = [
+  {k:'ag', label:'은판'}, {k:'cu', label:'구리판'}, {k:'zn', label:'아연판'},
+  {k:'znso4', sol:'ZnSO4'}, {k:'cuso4', sol:'CuSO4'}, {k:'agno3', sol:'AgNO3'},
+  {k:'plate', label:'12홈판'}, {k:'dropper', label:'스포이트'}, {k:'sand', label:'사포'}
+];
+const VB_FULL = [0,0,1000,600], VB_ZOOM = [300,120,560,380];
+const DROP_TIP_Y = 400;  // 병에 꽂혀 있을 때 스포이트 끝의 높이
+const SAND_REST = {x:880, y:520};
+
+/* ===== 공통 ===== */
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const svg = $('svg'), stage = $('stage'), nextBtn = $('nextBtn'), zoomBtn = $('zoomBtn'), sheetBtn = $('sheetBtn');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function el(tag, attrs, parent){
+  const n = document.createElementNS(NS, tag);
+  if (attrs) for (const k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function txt(parent, x, y, s, attrs){ const t = el('text', Object.assign({x, y}, attrs || {}), parent); t.textContent = s; return t; }
+function chem(parent, x, y, parts, attrs){
+  const t = el('text', Object.assign({x, y}, attrs || {}), parent);
+  let sub = false;
+  parts.forEach(([s, k]) => {
+    const a = {};
+    if (k === 'sub'){ a.dy = '0.42em'; a['font-size'] = '0.72em'; sub = true; }
+    else if (sub){ a.dy = '-0.3em'; sub = false; }
+    if (k === 'i'){ a['font-style'] = 'italic'; a['font-family'] = "'STIX Two Text', serif"; }
+    el('tspan', a, t).textContent = s;
+  });
+  return t;
+}
+const AQ = [['('],['aq','i'],[')']];
+function mulberry32(a){ return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+const rgba = (rgb, a) => `rgba(${rgb.map(v => Math.round(v)).join(',')},${a.toFixed(3)})`;
+function tween(dur, fn, done){
+  const t0 = performance.now();
+  if (reduced || dur <= 0){ fn(1); if (done) done(); return; }
+  (function f(now){ const k = clamp((now - t0) / dur, 0, 1); const e = 1 - Math.pow(1 - k, 3); fn(e); if (k < 1) requestAnimationFrame(f); else if (done) done(); })(t0);
+}
+let toastT;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2300); }
+const warnAt = {};
+function warn(msg){ const now = performance.now(); if (warnAt[msg] && now - warnAt[msg] < 2600) return; warnAt[msg] = now; toast(msg); }
+function pop(node){ node.classList.remove('hid'); node.classList.remove('pop'); void node.getBBox; node.classList.add('pop'); }
+
+/* ===== 상태 ===== */
+let S, L, drag = null;
+function fresh(){
+  const wells = {};
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++){
+    const k = r + '-' + c;
+    wells[k] = {r, c, k, sol:null, level:0, strip:null, t0:null, p:0, react:REACT[k] || null, E:null};
+  }
+  return {step:0, stepDone:false, finished:false, worn:{}, taken:{}, clock:0, firstT:null, timerStop:false,
+          wells, zoom:false, zoomTime:0, vb:VB_FULL.slice(), cleaned:false, lastMin:-1, dropFx:0};
+}
+
+/* ===== 장면 만들기 ===== */
+function grad(d, id, stops){ const g = el('linearGradient', {id, x1:0, y1:0, x2:1, y2:0}, d); stops.forEach(([o, c]) => el('stop', {offset:o, 'stop-color':c}, g)); }
+function buildDefs(){
+  const d = el('defs', null, svg);
+  grad(d, 'gAg', [['0','#f5f7f8'],['0.45','#c0c6ca'],['1','#e3e6e9']]);
+  grad(d, 'gCu', [['0','#f7b383'],['0.45','#c46a39'],['1','#e8925d']]);
+  grad(d, 'gZn', [['0','#d8dfe4'],['0.45','#9dabb3'],['1','#c9d2d8']]);
+  grad(d, 'gGlass', [['0','rgba(255,255,255,.75)'],['0.5','rgba(214,230,236,.38)'],['1','rgba(255,255,255,.7)']]);
+  grad(d, 'gBrown', [['0','#a8713a'],['0.5','#6b411b'],['1','#93602f']]);
+}
+function wellSil(cx, cy){ const l = cx - RX, r = cx + RX, b = cy + DEPTH; return `M${l},${cy} A${RX},${RY} 0 0 1 ${r},${cy} L${r},${b} A${RX},${RY} 0 0 1 ${l},${b} Z`; }
+function wellFront(cx, cy){ const l = cx - RX, r = cx + RX, b = cy + DEPTH; return `M${l},${cy} A${RX},${RY} 0 0 0 ${r},${cy} L${r},${b} A${RX},${RY} 0 0 1 ${l},${b} Z`; }
+function liqPath(cx, cy, h){ const l = cx - RX + .6, r = cx + RX - .6, b = cy + DEPTH, ys = b - h; return `M${l},${ys} A${RX - .6},${RY - .6} 0 0 0 ${r},${ys} L${r},${b} A${RX - .6},${RY - .6} 0 0 1 ${l},${b} Z`; }
+
+function buildScene(){
+  svg.innerHTML = '';
+  L = {bottleWrap:{}, bottleHot:{}, metalWrap:{}, strips:[], droppers:{}};
+  buildDefs();
+
+  /* 금속판 자리 */
+  L.zone = el('rect', {x:795, y:296, width:190, height:176, rx:14, class:'zone hid'}, svg);
+
+  /* 점선 상자·이름표 */
+  L.labels = el('g', {class:'hid'}, svg);
+  SOL_KEYS.forEach(k => {
+    const s = SOLS[k], cy = ROWY[s.row];
+    const runs = []; s.cols.forEach(c => { const last = runs[runs.length - 1]; if (last && last[1] === c - 1) last[1] = c; else runs.push([c, c]); });
+    L.runs = (L.runs || []).concat(runs.map(([a, b]) => ({a, b, cy, col:s.box})));
+    chem(L.labels, 356, cy + 26, s.f.concat(AQ), {'text-anchor':'end', class:'lbl'});
+  });
+  METAL_KEYS.forEach((m, c) => {
+    el('rect', {x:COLX[c] - 30, y:136, width:60, height:30, rx:15, class:'col-pill'}, L.labels);
+    txt(L.labels, COLX[c], 158, m, {'text-anchor':'middle', class:'col-txt'});
+  });
+
+  /* 12홈판 */
+  L.plateWrap = el('g', {class:'hid'}, svg);
+  el('ellipse', {cx:560, cy:510, rx:212, ry:13, class:'shadow'}, L.plateWrap);
+  el('rect', {x:366, y:468, width:388, height:38, rx:14, class:'plate-edge'}, L.plateWrap);
+  el('rect', {x:366, y:206, width:388, height:288, rx:18, class:'plate-top'}, L.plateWrap);
+  L.boxes = el('g', {class:'hid'}, L.plateWrap);
+  L.runs.forEach(({a, b, cy, col}) => el('rect', {x:COLX[a] - 44, y:cy - 22, width:COLX[b] - COLX[a] + 88, height:80, rx:10, fill:'none', stroke:col, 'stroke-width':2.6, 'stroke-dasharray':'8 5'}, L.boxes));
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++){
+    const cx = COLX[c], cy = ROWY[r], w = S.wells[r + '-' + c];
+    const g = el('g', null, L.plateWrap);
+    const E = {};
+    el('path', {d:wellSil(cx, cy), class:'well-back'}, g);
+    el('ellipse', {cx, cy:cy + DEPTH, rx:RX, ry:RY, class:'well-floor'}, g);
+    E.liq = el('path', {style:'display:none'}, g);
+    E.surf = el('ellipse', {cx, rx:RX - .6, ry:RY - .6, style:'display:none'}, g);
+    E.lvl = el('ellipse', {cx, cy:cy + DEPTH - LEVEL, rx:RX - .6, ry:RY - .6, class:'lvl', style:'display:none'}, g);
+    E.slot = el('g', {transform:`translate(${cx},${cy + DEPTH})`}, g);
+    E.tint = el('path', {style:'display:none', 'pointer-events':'none'}, g);
+    el('path', {d:wellFront(cx, cy), class:'well-front'}, g);
+    E.rim = el('ellipse', {cx, cy, rx:RX, ry:RY, class:'well-rim'}, g);
+    w.E = E;
+  }
+
+  /* 시약병 */
+  L.bottles = el('g', null, svg);
+  SOL_KEYS.forEach(buildBottle);
+
+  /* 금속판 */
+  L.metals = el('g', null, svg);
+  const order = ['Ag','Ag','Cu','Cu','Zn','Zn'];
+  METAL_KEYS.forEach((m, j) => {
+    const wrap = el('g', {class:'hid'}, L.metals);
+    L.metalWrap[m] = wrap;
+    txt(wrap, 830 + j * 60, 458, m, {'text-anchor':'middle', class:'lbl', 'font-size':17, 'font-family':"'Noto Serif KR', serif"});
+  });
+  order.forEach((m, i) => L.strips.push(buildStrip(i, m, L.metalWrap[m])));
+
+  /* 사포 */
+  L.sandWrap = el('g', {class:'hid'}, svg);
+  L.sand = el('g', null, L.sandWrap);
+  el('rect', {x:-44, y:-28, width:88, height:56, rx:4, fill:'#d8b67c', stroke:'#b8935a', 'stroke-width':1.5}, L.sand);
+  const rs = mulberry32(9);
+  for (let i = 0; i < 70; i++) el('circle', {cx:(rs() * 82 - 41).toFixed(1), cy:(rs() * 50 - 25).toFixed(1), r:(0.6 + rs() * 0.9).toFixed(2), fill:rs() < .5 ? '#a9864c' : '#efd6a6'}, L.sand);
+  S.sandPos = Object.assign({}, SAND_REST); setSand();
+
+  /* 폐수통 */
+  L.waste = el('g', {class:'waste hid', transform:'translate(890,446)'}, svg);
+  el('path', {d:'M-38,0 L-38,-90 L-20,-108 L30,-108 Q38,-108 38,-100 L38,0 Z', class:'waste-body'}, L.waste);
+  el('rect', {x:-10, y:-126, width:30, height:18, rx:7, fill:'none', stroke:'var(--safety)', 'stroke-width':3}, L.waste);
+  el('rect', {x:-34, y:-122, width:12, height:14, rx:2, fill:'var(--safety)'}, L.waste);
+  el('use', {href:'#ic-skull', x:-16, y:-92, width:32, height:32, style:'color:var(--safety)'}, L.waste);
+  txt(L.waste, 0, -26, '폐수통', {'text-anchor':'middle', class:'waste-txt'});
+
+  /* 경과 시간 */
+  L.timer = el('text', {x:560, y:552, 'text-anchor':'middle', class:'timer', visibility:'hidden'}, svg);
+  L.timerA = el('tspan', null, L.timer); L.timerA.textContent = '경과 시간 ';
+  L.timerB = el('tspan', {class:'mono'}, L.timer);
+  L.timerC = el('tspan', null, L.timer); L.timerC.textContent = ' 분';
+
+  L.fx = el('g', {'pointer-events':'none'}, svg);
+
+  L.dragLayer = el('g', null, svg);
+
+  /* 안전 장비 */
+  L.gear = el('g', null, svg);
+  [['coat','실험복','ic-coat',330], ['goggle','보안경','ic-goggle',500], ['glove','실험용 장갑','ic-glove',670]].forEach(([k, label, ic, x]) => {
+    const g = el('g', {class:'gear-item', 'data-gear':k, transform:`translate(${x},318)`}, L.gear);
+    el('circle', {r:64, class:'gear-bg'}, g);
+    el('use', {href:'#' + ic, x:-40, y:-40, width:80, height:80, class:'gear-ic'}, g);
+    txt(g, 0, 100, label, {'text-anchor':'middle', class:'lbl'});
+  });
+
+  /* 선반 */
+  L.shelf = el('g', {class:'hid'}, svg);
+  el('rect', {x:30, y:176, width:600, height:12, rx:4, class:'shelf'}, L.shelf);
+  PREP.forEach((it, i) => {
+    const g = el('g', {class:'shelf-item', 'data-prep':it.k, transform:`translate(${72 + i * 64},176)`}, L.shelf);
+    el('rect', {x:-31, y:-84, width:62, height:118, fill:'transparent'}, g);
+    drawMini(g, it.k);
+    if (it.sol) chem(g, 0, 24, SOLS[it.sol].f, {'text-anchor':'middle', class:'lbl-s'});
+    else txt(g, 0, 24, it.label, {'text-anchor':'middle', class:'lbl-s'});
+  });
+}
+
+function buildBottle(k){
+  const s = SOLS[k], x = s.bx, brown = k === 'AgNO3';
+  const wrap = el('g', {class:'hid'}, L.bottles);
+  L.bottleHot[k] = el('rect', {x:x - 34, y:284, width:68, height:168, rx:16, class:'bottle-hot', style:'display:none'}, wrap);
+  const body = `M${x - 25},346 Q${x - 25},331 ${x - 12},326 L${x - 9},318 L${x - 9},302 L${x + 9},302 L${x + 9},318 L${x + 12},326 Q${x + 25},331 ${x + 25},346 L${x + 25},436 Q${x + 25},442 ${x + 19},442 L${x - 19},442 Q${x - 25},442 ${x - 25},436 Z`;
+  if (!brown) el('rect', {x:x - 22.5, y:366, width:45, height:73.5, rx:4, fill:rgba(s.rgb, k === 'CuSO4' ? .85 : .5)}, wrap);
+  /* 용액마다 전용 스포이트: 병 안에 꽂아 둔다 */
+  const outer = el('g', {class:'hid'}, wrap);
+  const dg = el('g', {'data-sol':k}, outer);
+  el('rect', {x:-17, y:-150, width:34, height:152, fill:'transparent'}, dg);
+  el('path', {d:'M-4.5,-98 L4.5,-98 L4.5,-24 L1.6,-2 L-1.6,-2 L-4.5,-24 Z', class:'glass-tube'}, dg);
+  const liqR = el('rect', {x:-3, width:6, rx:1, style:'display:none'}, dg);
+  const liqT = el('path', {d:'M-3,-24.5 L-1.1,-4 L1.1,-4 L3,-24.5 Z', style:'display:none'}, dg);
+  el('path', {d:'M-9,-96 L9,-96 L9,-124 Q9,-146 0,-146 Q-9,-146 -9,-124 Z', fill:'#c8553c', stroke:'#9b3c27', 'stroke-width':1.5}, dg);
+  el('rect', {x:-10.5, y:-101, width:21, height:7, rx:2, fill:'#a5432c'}, dg);
+  const d = {sol:k, outer, g:dg, liqR, liqT, amount:0, x, y:DROP_TIP_Y, homeX:x, homeY:DROP_TIP_Y};
+  L.droppers[k] = d; setDropper(d);
+  d.anchor = el('path', {d:body, class:brown ? 'bottle-brown' : 'bottle-glass', opacity:brown ? .95 : 1}, wrap);
+  el('rect', {x:x - 11.5, y:296, width:23, height:8, rx:3, class:brown ? 'bottle-brown' : 'bottle-glass'}, wrap);
+  el('rect', {x:x - 20, y:384, width:40, height:28, rx:3, class:'bottle-label'}, wrap);
+  chem(wrap, x, 403, s.f, {'text-anchor':'middle', class:'blabel'});
+  L.bottleWrap[k] = wrap;
+}
+
+function buildStrip(i, metal, parent){
+  const x = 815 + i * 30, y = 430;
+  const g = el('g', {'data-i':i}, parent);
+  el('rect', {x:-15, y:-122, width:30, height:126, fill:'transparent'}, g);
+  el('rect', {x:-11, y:-STRIP_LEN, width:22, height:STRIP_LEN, rx:2, fill:`url(#g${metal})`, stroke:METALS[metal].stroke, 'stroke-width':1.3}, g);
+  el('line', {x1:-5, y1:-STRIP_LEN + 6, x2:-5, y2:-6, stroke:'#fff', 'stroke-width':2, opacity:.5, 'stroke-linecap':'round'}, g);
+  const tar = el('g', {'pointer-events':'none'}, g);
+  el('rect', {x:-11, y:-STRIP_LEN, width:22, height:STRIP_LEN, rx:2, fill:'#5e5a4c', opacity:.45}, tar);
+  const rnd = mulberry32(77 + i * 13);
+  for (let k = 0; k < 8; k++) el('ellipse', {cx:(rnd() * 14 - 7).toFixed(1), cy:(-rnd() * (STRIP_LEN - 14) - 7).toFixed(1), rx:(1.5 + rnd() * 2.2).toFixed(1), ry:(2 + rnd() * 5).toFixed(1), fill:'#3d3a31', opacity:.35}, tar);
+  const dep = el('g', {'pointer-events':'none'}, g);
+  const s = {i, metal, g, tar, dep, x, y, rot:0, homeX:x, homeY:y, placed:null, wrap:parent, rub:0, depData:null};
+  setTf(s);
+  return s;
+}
+function setTf(s){ s.g.setAttribute('transform', `translate(${s.x.toFixed(1)},${s.y.toFixed(1)}) rotate(${s.rot})`); }
+
+function drawMini(g, k){
+  if (k === 'ag' || k === 'cu' || k === 'zn'){
+    const m = k[0].toUpperCase() + k[1];
+    [-9, 1].forEach(dx => el('rect', {x:dx, y:-64, width:8, height:62, rx:1, fill:`url(#g${m})`, stroke:METALS[m].stroke}, g));
+  } else if (k === 'znso4' || k === 'cuso4' || k === 'agno3'){
+    const sol = {znso4:'ZnSO4', cuso4:'CuSO4', agno3:'AgNO3'}[k];
+    const brown = sol === 'AgNO3';
+    if (!brown) el('rect', {x:-13, y:-36, width:26, height:35, rx:3, fill:rgba(SOLS[sol].rgb, sol === 'CuSO4' ? .85 : .5)}, g);
+    el('path', {d:'M-14,-50 Q-14,-58 -7,-60 L-5,-64 L-5,-72 L5,-72 L5,-64 L7,-60 Q14,-58 14,-50 L14,-4 Q14,0 10,0 L-10,0 Q-14,0 -14,-4 Z', class:brown ? 'bottle-brown' : 'bottle-glass'}, g);
+  } else if (k === 'plate'){
+    el('rect', {x:-27, y:-40, width:54, height:38, rx:6, class:'plate-top'}, g);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) el('ellipse', {cx:-18 + c * 12, cy:-31 + r * 11, rx:4.6, ry:3, class:'well-back'}, g);
+  } else if (k === 'dropper'){
+    [-14, 0, 14].forEach(dx => {
+      const d = el('g', {transform:`translate(${dx},-2) scale(.45)`}, g);
+      el('path', {d:'M-4.5,-98 L4.5,-98 L4.5,-24 L1.6,-2 L-1.6,-2 L-4.5,-24 Z', class:'glass-tube'}, d);
+      el('path', {d:'M-9,-96 L9,-96 L9,-124 Q9,-146 0,-146 Q-9,-146 -9,-124 Z', fill:'#c8553c'}, d);
+    });
+  } else if (k === 'sand'){
+    el('rect', {x:-24, y:-34, width:48, height:32, rx:3, fill:'#d8b67c', stroke:'#b8935a'}, g);
+  }
+}
+
+/* ===== 그리기 ===== */
+function setDropper(d){ d.g.setAttribute('transform', `translate(${d.x.toFixed(1)},${d.y.toFixed(1)})`); }
+function drawDropper(d){
+  const a = d.amount;
+  if (a <= 0.002){ d.liqR.style.display = 'none'; d.liqT.style.display = 'none'; return; }
+  const s = SOLS[d.sol], col = rgba(s.rgb, Math.max(.6, s.a)), h = a * 62;
+  d.liqR.style.display = ''; d.liqT.style.display = '';
+  d.liqR.setAttribute('y', (-24.5 - h).toFixed(1)); d.liqR.setAttribute('height', h.toFixed(1)); d.liqR.setAttribute('fill', col);
+  d.liqT.setAttribute('fill', col);
+}
+function setSand(){ L.sand.setAttribute('transform', `translate(${S.sandPos.x.toFixed(1)},${S.sandPos.y.toFixed(1)})`); }
+
+function liquidColor(w){
+  const s = SOLS[w.sol]; let rgb = s.rgb.slice(), a = s.a;
+  if (w.react && w.p > 0){
+    if (w.react === 'CuZn'){ const t = CFG.cuFade * w.p; rgb = mix(rgb, [196,228,238], t); a = a + (.45 - a) * t; }
+    else if (w.react === 'AgCu'){ const t = CFG.agCuBlue * w.p; rgb = mix(rgb, [58,154,212], t); a = a + (.82 - a) * t; }
+  }
+  return {rgb, a};
+}
+function drawWell(w){
+  const E = w.E, cx = COLX[w.c], cy = ROWY[w.r];
+  if (!w.sol || w.level <= .002){ E.liq.style.display = E.surf.style.display = E.tint.style.display = 'none'; return; }
+  const h = LEVEL * w.level, {rgb, a} = liquidColor(w), d = liqPath(cx, cy, h);
+  E.liq.style.display = E.surf.style.display = E.tint.style.display = '';
+  E.liq.setAttribute('d', d); E.liq.setAttribute('fill', rgba(rgb, a));
+  E.surf.setAttribute('cy', (cy + DEPTH - h).toFixed(2)); E.surf.setAttribute('fill', rgba(mix(rgb, [255,255,255], .35), a * .85));
+  E.tint.setAttribute('d', d); E.tint.setAttribute('fill', rgba(rgb, a * .5));
+}
+
+/* 석출물: 금속판이 용액에 잠긴 부분에만 생긴다 */
+function makeDeposit(s, type){
+  const rnd = mulberry32(type.length * 97 + s.i * 31 + 5), IM = 29;
+  s.dep.innerHTML = '';
+  const col = {
+    CuZn:{coat:'#6a2c19', b:['#7d3720','#4b2215','#9b4b2b']},   /* 아연판 위의 구리: 적갈색~검붉은 가루 */
+    AgZn:{coat:'#4a4e52', b:['#3a3d40','#62676b','#2f3235']},   /* 아연판 위의 은: 회흑색 */
+    AgCu:{coat:'#8f969b', b:['#c3c8cc','#9aa1a6','#e3e6e8']}    /* 구리판 위의 은: 회백색 결정 */
+  }[type];
+  const coat = el('rect', {x:-11.6, y:-IM, width:23.2, height:IM, rx:2, fill:col.coat, opacity:0}, s.dep);
+  const bumps = [], nb = type === 'AgCu' ? 10 : 20;
+  for (let k = 0; k < nb; k++){
+    const x = rnd() < .55 ? (rnd() < .5 ? -11 : 11) + (rnd() * 4 - 2) : (rnd() * 22 - 11);
+    bumps.push({n:el('circle', {cx:x.toFixed(1), cy:(-rnd() * (IM - 4) - 2).toFixed(1), r:0, fill:col.b[k % 3], opacity:0}, s.dep), r:1.5 + rnd() * 2.4});
+  }
+  const needles = [], nn = type === 'AgCu' ? 18 : type === 'AgZn' ? 8 : 0;
+  for (let k = 0; k < nn; k++){
+    const side = rnd() < .5 ? -1 : 1;
+    const x0 = side * (8 + rnd() * 3.5), y0 = -(3 + rnd() * (IM - 9));
+    let dx = side * (0.55 + rnd() * 0.6), dy = rnd() * 0.8 - 0.4;
+    const n = Math.hypot(dx, dy); dx /= n; dy /= n;
+    let len = type === 'AgCu' ? 9 + rnd() * 14 : 4 + rnd() * 5;
+    if (dy < 0) len = Math.min(len, (y0 + IM - 2) / -dy);
+    if (dy > 0) len = Math.min(len, (-y0 - 1) / dy);
+    const tw = (rnd() < .5 ? -1 : 1) * (0.6 + rnd() * 0.5);
+    const outer = el('path', {fill:'none', stroke:type === 'AgCu' ? '#99a0a5' : '#45484b', 'stroke-width':2.2, 'stroke-linecap':'round'}, s.dep);
+    const inner = el('path', {fill:'none', stroke:type === 'AgCu' ? '#f1f3f4' : '#8a8f93', 'stroke-width':.8, 'stroke-linecap':'round'}, s.dep);
+    needles.push({outer, inner, x0, y0, dx, dy, len, tw});
+  }
+  s.depData = {coat, bumps, needles, type};
+}
+function drawDeposit(w){
+  const d = w.strip && w.strip.depData; if (!d) return;
+  const p = w.p * CFG.depositMax;
+  d.coat.setAttribute('opacity', ((d.type === 'AgCu' ? .55 : .9) * p).toFixed(3));
+  d.bumps.forEach(b => { b.n.setAttribute('r', (b.r * (.3 + .7 * p)).toFixed(2)); b.n.setAttribute('opacity', Math.min(1, p * 1.4).toFixed(2)); });
+  d.needles.forEach(nd => {
+    if (p < .03){ nd.outer.setAttribute('d', ''); nd.inner.setAttribute('d', ''); return; }
+    const l = nd.len * p, ex = nd.x0 + nd.dx * l, ey = nd.y0 + nd.dy * l, mx = nd.x0 + nd.dx * l * .55, my = nd.y0 + nd.dy * l * .55;
+    const c = Math.cos(nd.tw), sn = Math.sin(nd.tw), tx = nd.dx * c - nd.dy * sn, ty = nd.dx * sn + nd.dy * c, tl = l * .4;
+    const dd = `M${nd.x0.toFixed(1)},${nd.y0.toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} M${mx.toFixed(1)},${my.toFixed(1)} l${(tx * tl).toFixed(1)},${(ty * tl).toFixed(1)}`;
+    nd.outer.setAttribute('d', dd); nd.inner.setAttribute('d', dd);
+  });
+}
+function spawnDrop(x, y0, y1, rgb){
+  const c = el('circle', {cx:x, cy:y0, r:2.6, fill:rgba(rgb, .85)}, L.fx);
+  tween(260, k => c.setAttribute('cy', (y0 + (y1 - y0) * k).toFixed(1)), () => c.remove());
+}
+
+/* ===== 단계 진행 ===== */
+function setProgress(f){ $('progFill').style.width = (f * 100) + '%'; $('progKnob').style.left = (f * 100) + '%'; }
+function enterStep(i){
+  S.step = i; S.stepDone = false;
+  const st = STEPS[i];
+  const tag = $('tag'); tag.textContent = st.tag; tag.className = 'tag ' + (st.cls || '');
+  $('cur').textContent = i + 1; $('tot').textContent = STEPS.length; $('snum').textContent = i + 1;
+  $('stext').innerHTML = st.text; $('hint').innerHTML = st.hint;
+  nextBtn.classList.remove('ready', 'blink'); nextBtn.textContent = '다음 단계';
+  setProgress(i / STEPS.length);
+
+  L.gear.classList.toggle('hid', i !== 0);
+  L.shelf.classList.toggle('hid', i !== 1);
+  L.labels.classList.toggle('hid', i < 3);
+  L.boxes.classList.toggle('hid', i < 3);
+  L.zone.classList.toggle('hid', i < 1);
+  SOL_KEYS.forEach(k => { L.bottleHot[k].style.display = (st.kind === 'sol' && st.sol === k) ? '' : 'none'; });
+  Object.values(S.wells).forEach(w => {
+    const tgt = st.kind === 'sol' && SOLS[st.sol].row === w.r && SOLS[st.sol].cols.includes(w.c) && w.level < 1;
+    w.E.lvl.style.display = tgt ? '' : 'none';
+  });
+  L.metals.classList.toggle('hid', st.kind === 'clean');
+  if (st.kind === 'clean'){ L.waste.classList.remove('hid'); L.zone.classList.add('hid'); if (S.zoom) setZoom(false); closeSheet(); }
+  sheetBtn.disabled = i < 10;
+  updateDraggables();
+  if (st.kind === 'sheet'){ openSheet(); checkMarks(); }
+}
+function updateDraggables(){
+  const st = STEPS[S.step];
+  SOL_KEYS.forEach(k => { const d = L.droppers[k]; if (st.kind === 'sol' && st.sol === k) d.g.setAttribute('data-drag', 'dropper'); else d.g.removeAttribute('data-drag'); });
+  L.strips.forEach(s => { if (!s.placed && st.kind === 'metal' && s.metal === st.metal) s.g.setAttribute('data-drag', 'strip'); else s.g.removeAttribute('data-drag'); });
+  if (st.kind === 'sand' && !S.stepDone) L.sand.setAttribute('data-drag', 'sand'); else L.sand.removeAttribute('data-drag');
+}
+function complete(){
+  if (S.stepDone) return;
+  S.stepDone = true;
+  toast(STEPS[S.step].ok);
+  nextBtn.classList.add('ready'); nextBtn.classList.remove('blink'); void nextBtn.offsetWidth; nextBtn.classList.add('blink');
+  setProgress((S.step + 1) / STEPS.length);
+  if (S.step === STEPS.length - 1){ S.finished = true; nextBtn.textContent = '처음부터 다시'; }
+  updateDraggables();
+}
+nextBtn.addEventListener('click', () => {
+  if (S.finished){ resetAll(); return; }
+  if (!S.stepDone){ toast('이 단계를 먼저 마치자.'); return; }
+  enterStep(S.step + 1);
+});
+
+/* ===== 누르기 ===== */
+svg.addEventListener('click', e => {
+  const gear = e.target.closest('[data-gear]');
+  if (gear && S.step === 0){
+    const k = gear.dataset.gear; if (S.worn[k]) return;
+    S.worn[k] = 1; gear.classList.add('gone');
+    document.querySelector(`.sf[data-sf="${k}"]`).classList.add('on');
+    if (Object.keys(S.worn).length === 3) complete();
+    return;
+  }
+  const item = e.target.closest('[data-prep]');
+  if (item && S.step === 1){
+    const k = item.dataset.prep; if (S.taken[k]) return;
+    S.taken[k] = 1; item.classList.add('gone');
+    document.querySelector(`.pi[data-k="${k}"]`).classList.add('done');
+    const map = {ag:L.metalWrap.Ag, cu:L.metalWrap.Cu, zn:L.metalWrap.Zn, znso4:L.bottleWrap.ZnSO4, cuso4:L.bottleWrap.CuSO4, agno3:L.bottleWrap.AgNO3, plate:L.plateWrap, dropper:SOL_KEYS.map(s => L.droppers[s].outer), sand:L.sandWrap};
+    [].concat(map[k]).forEach(pop);
+    if (Object.keys(S.taken).length === PREP.length) complete();
+    return;
+  }
+  if (e.target.closest('.waste') && S.step === STEPS.length - 1) cleanup();
+});
+
+/* ===== 끌기 ===== */
+function svgPt(e){ const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+svg.addEventListener('pointerdown', e => {
+  if (drag) return;
+  const t = e.target.closest('[data-drag]'); if (!t) return;
+  e.preventDefault();
+  const p = svgPt(e), kind = t.getAttribute('data-drag');
+  if (kind === 'dropper'){
+    const d = L.droppers[t.dataset.sol];
+    drag = {kind, d, off:{x:d.x - p.x, y:d.y - p.y}};
+    drag.snap = dropperSnap(d, {x:d.x, y:d.y});
+    L.dragLayer.appendChild(d.g);
+  } else if (kind === 'strip'){
+    const s = L.strips[+t.dataset.i];
+    drag = {kind, s, off:{x:s.x - p.x, y:s.y - p.y}};
+    L.dragLayer.appendChild(s.g);
+  } else if (kind === 'sand'){
+    drag = {kind, off:{x:S.sandPos.x - p.x, y:S.sandPos.y - p.y}};
+  }
+  drag.id = e.pointerId;
+  try { svg.setPointerCapture(e.pointerId); } catch(_){}
+  stage.classList.add('grabbing');
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const p = svgPt(e);
+  if (drag.kind === 'dropper'){
+    const tip = {x:p.x + drag.off.x, y:p.y + drag.off.y};
+    drag.snap = dropperSnap(drag.d, tip);
+    Object.values(S.wells).forEach(w => w.E.rim.classList.toggle('hot', !!(drag.snap && drag.snap.type === 'well' && drag.snap.w === w)));
+    const at = drag.snap ? drag.snap : tip;
+    drag.d.x = at.x; drag.d.y = at.y; setDropper(drag.d);
+  } else if (drag.kind === 'strip'){
+    const s = drag.s;
+    s.x = clamp(p.x + drag.off.x, 20, 980); s.y = clamp(p.y + drag.off.y, 130, 590); setTf(s);
+    const t = stripTarget(s);
+    Object.values(S.wells).forEach(w => w.E.rim.classList.toggle('hot', !!(t && t.w === w && t.d < CFG.snapDist)));
+  } else if (drag.kind === 'sand'){
+    const nx = clamp(p.x + drag.off.x, 50, 950), ny = clamp(p.y + drag.off.y, 40, 570);
+    const dist = Math.hypot(nx - S.sandPos.x, ny - S.sandPos.y);
+    S.sandPos.x = nx; S.sandPos.y = ny; setSand();
+    if (!S.stepDone && dist > 0){
+      L.strips.forEach(s => {
+        if (s.placed) return;
+        if (Math.abs(nx - s.x) < 40 && ny > s.y - STRIP_LEN - 20 && ny < s.y + 20){
+          s.rub += dist; s.tar.setAttribute('opacity', clamp(1 - s.rub / CFG.rubNeed, 0, 1).toFixed(3));
+        }
+      });
+      if (L.strips.every(s => s.rub >= CFG.rubNeed)) complete();
+    }
+  }
+});
+function endDrag(e){
+  if (!drag || e.pointerId !== drag.id) return;
+  const d = drag; drag = null;
+  stage.classList.remove('grabbing');
+  Object.values(S.wells).forEach(w => w.E.rim.classList.remove('hot'));
+  if (d.kind === 'dropper'){
+    const dp = d.d, fx = dp.x, fy = dp.y;
+    tween(320, k => { dp.x = fx + (dp.homeX - fx) * k; dp.y = fy + (dp.homeY - fy) * k; setDropper(dp); },
+      () => { if (!drag || drag.d !== dp) dp.outer.appendChild(dp.g); });
+  } else if (d.kind === 'strip'){
+    const s = d.s, t = stripTarget(s);
+    if (t && t.d < CFG.snapDist) placeStrip(s, t.w);
+    else {
+      if (t && t.wrong) warn(`${METALS[s.metal].name}은 ${s.metal} 세로줄의 홈에 넣자.`);
+      const fx = s.x, fy = s.y;
+      tween(280, k => { s.x = fx + (s.homeX - fx) * k; s.y = fy + (s.homeY - fy) * k; setTf(s); }, () => { if (!s.placed) s.wrap.appendChild(s.g); });
+    }
+  } else if (d.kind === 'sand'){
+    const fx = S.sandPos.x, fy = S.sandPos.y;
+    tween(320, k => { S.sandPos.x = fx + (SAND_REST.x - fx) * k; S.sandPos.y = fy + (SAND_REST.y - fy) * k; setSand(); });
+  }
+}
+svg.addEventListener('pointerup', endDrag);
+svg.addEventListener('pointercancel', endDrag);
+
+function dropperSnap(d, tip){
+  /* 스포이트는 자기 병에만 꽂힌다 */
+  if (Math.hypot(tip.x - d.homeX, tip.y - (DROP_TIP_Y - 30)) < 60) return {type:'bottle', k:d.sol, x:d.homeX, y:DROP_TIP_Y};
+  let best = null, bd = 1e9;
+  Object.values(S.wells).forEach(w => { const d = Math.hypot(tip.x - COLX[w.c], tip.y - ROWY[w.r]); if (d < bd){ bd = d; best = w; } });
+  if (best && bd < CFG.snapDist * .7) return {type:'well', w:best, x:COLX[best.c], y:ROWY[best.r] - 6};
+  return null;
+}
+function stripTarget(s){
+  const m = METALS[s.metal];
+  let best = null, bd = 1e9, wrong = false;
+  m.rows.forEach(r => { const w = S.wells[r + '-' + m.col]; if (w.strip) return; const d = Math.hypot(s.x - COLX[m.col], s.y - (ROWY[r] + DEPTH)); if (d < bd){ bd = d; best = w; } });
+  Object.values(S.wells).forEach(w => {
+    if (w.c === m.col && m.rows.includes(w.r)) return;
+    if (Math.hypot(s.x - COLX[w.c], s.y - (ROWY[w.r] + DEPTH)) < CFG.snapDist * .7) wrong = true;
+  });
+  return best ? {w:best, d:bd, wrong} : (wrong ? {w:null, d:1e9, wrong} : null);
+}
+function placeStrip(s, w){
+  s.placed = w; w.strip = s;
+  s.g.removeAttribute('data-drag');
+  w.E.slot.appendChild(s.g);
+  s.x = 0; s.rot = LEAN;
+  tween(260, k => { s.y = -26 * (1 - k); setTf(s); });
+  w.t0 = S.clock; w.p = 0;
+  if (S.firstT === null) S.firstT = S.clock;
+  if (w.react) makeDeposit(s, w.react);
+  const m = METALS[s.metal];
+  if (m.rows.every(r => S.wells[r + '-' + m.col].strip)) complete();
+}
+
+/* ===== 뒷정리 ===== */
+function cleanup(){
+  if (S.cleaned) return;
+  S.cleaned = true; S.timerStop = true;
+  L.timer.setAttribute('visibility', 'hidden');
+  const ws = Object.values(S.wells).filter(w => w.level > 0);
+  ws.forEach(w => w.level0 = w.level);
+  tween(reduced ? 0 : 900, k => {
+    ws.forEach(w => { w.level = w.level0 * (1 - k); drawWell(w); if (w.strip) w.strip.g.setAttribute('opacity', (1 - k).toFixed(2)); });
+  }, () => {
+    ws.forEach(w => { if (w.strip){ w.strip.g.remove(); w.strip = null; } w.sol = null; w.level = 0; drawWell(w); });
+    complete();
+  });
+}
+
+/* ===== 확대 ===== */
+function setZoom(on){
+  S.zoom = on;
+  zoomBtn.textContent = on ? '원래대로 보기' : '확대해서 보기';
+  zoomBtn.classList.toggle('on', on);
+  setView(on ? VB_ZOOM : VB_FULL);
+}
+function setView(to){
+  const from = S.vb.slice();
+  tween(450, k => { S.vb = from.map((v, i) => v + (to[i] - v) * k); svg.setAttribute('viewBox', S.vb.map(v => v.toFixed(2)).join(' ')); });
+}
+/* 정리 패널이 열리면 12홈판이 가려지지 않도록 실험대를 왼쪽으로 민다 */
+function sheetView(){
+  const st = stage.getBoundingClientRect(), W = st.width, H = st.height;
+  const k = Math.min(W / 1000, H / 600), ox = (W - 1000 * k) / 2;
+  const panelLeft = W - $('sheet').offsetWidth;
+  const shift = clamp(770 - (panelLeft - ox) / k, 0, 360);
+  return [shift, 0, 1000, 600];
+}
+zoomBtn.addEventListener('click', () => setZoom(!S.zoom));
+
+/* ===== 정리 시트 ===== */
+function openSheet(){
+  if (S.zoom){ S.zoom = false; zoomBtn.textContent = '확대해서 보기'; zoomBtn.classList.remove('on'); }
+  $('sheet').classList.add('open'); $('sheet').setAttribute('aria-hidden', 'false');
+  setView(sheetView());
+}
+function closeSheet(){
+  const was = $('sheet').classList.contains('open');
+  $('sheet').classList.remove('open'); $('sheet').setAttribute('aria-hidden', 'true');
+  if (was && !S.zoom) setView(VB_FULL);
+}
+window.addEventListener('resize', () => { if ($('sheet').classList.contains('open')){ S.vb = sheetView(); svg.setAttribute('viewBox', S.vb.join(' ')); } });
+sheetBtn.addEventListener('click', () => { if ($('sheet').classList.contains('open')) closeSheet(); else openSheet(); });
+$('sheetClose').addEventListener('click', closeSheet);
+function buildTable(){
+  let h = '<thead><tr><th></th>' + METAL_KEYS.map(m => `<th>${m}</th>`).join('') + '</tr></thead><tbody>';
+  SOL_KEYS.forEach((k, r) => {
+    h += `<tr><th>${SOLS[k].html}</th>`;
+    METAL_KEYS.forEach(m => {
+      if (METALS[m].rows.includes(r)) h += `<td><button class="mark" data-cell="${r}-${METALS[m].col}" aria-pressed="false" aria-label="${m} 열 ○표">(<span class="o"></span>)</button></td>`;
+      else h += '<td class="na"></td>';
+    });
+    h += '</tr>';
+  });
+  $('rtbl').innerHTML = h + '</tbody>';
+  $('rtbl').addEventListener('click', e => {
+    const b = e.target.closest('.mark'); if (!b) return;
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on); b.querySelector('.o').textContent = on ? '○' : '';
+    checkMarks();
+  });
+}
+/* ○표가 반응이 일어나는 홈과 정확히 같으면 박수 */
+function checkMarks(){
+  if (!S || STEPS[S.step].kind !== 'sheet' || S.stepDone) return;
+  const on = [...document.querySelectorAll('.mark[aria-pressed="true"]')].map(b => b.dataset.cell);
+  const ans = Object.keys(REACT);
+  if (on.length === ans.length && ans.every(k => on.includes(k))){ cheer(); complete(); }
+  else if (on.length >= ans.length) warn('다시 확인해 보자.');
+}
+function cheer(){
+  const box = document.createElement('div'); box.className = 'cheer';
+  box.innerHTML = '<div class="clap">👏</div>';
+  const cols = ['#5dc2b0','#f4c33b','#e9966b','#23907f'];
+  for (let i = 0; i < 36; i++){
+    const c = document.createElement('i');
+    c.style.left = (Math.random() * 100) + '%';
+    c.style.background = cols[i % 4];
+    c.style.animationDelay = (Math.random() * .5) + 's';
+    c.style.animationDuration = (1.4 + Math.random() * .9) + 's';
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
+    box.appendChild(c);
+  }
+  stage.appendChild(box);
+  setTimeout(() => box.remove(), 2800);
+  if (CFG.clapSound) clapSound();
+}
+/* 박수 소리: 짧은 잡음을 여러 번 겹쳐 만든다 */
+function clapSound(){
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    const ac = cheer.ac || (cheer.ac = new AC()); if (ac.state === 'suspended') ac.resume();
+    const len = Math.floor(ac.sampleRate * .08), buf = ac.createBuffer(1, len, ac.sampleRate), ch = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 4);
+    const t0 = ac.currentTime + .02;
+    for (let i = 0; i < 46; i++){
+      const t = t0 + Math.random() * 1.7, src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+      src.buffer = buf; f.type = 'bandpass'; f.frequency.value = 900 + Math.random() * 1600; f.Q.value = 1.2;
+      g.gain.value = .35 * (1 - (t - t0) / 2.2);
+      src.connect(f); f.connect(g); g.connect(ac.destination); src.start(t);
+    }
+  } catch(_){}
+}
+function clearMarks(){ document.querySelectorAll('.mark').forEach(b => { b.setAttribute('aria-pressed', 'false'); b.querySelector('.o').textContent = ''; }); }
+
+/* ===== 매 프레임 ===== */
+let last = performance.now();
+function tick(now){
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  S.clock += dt;
+  const st = STEPS[S.step];
+
+  /* 스포이트: 빨아올리기·넣기 */
+  if (drag && drag.kind === 'dropper' && drag.snap){
+    const sn = drag.snap;
+    if (sn.type === 'bottle'){
+      const d = drag.d;
+      if (d.amount < 1){
+        d.amount = Math.min(1, d.amount + dt / CFG.drawTime);
+        drawDropper(d);
+        if (d.amount >= 1) warn('스포이트에 용액을 빨아올렸다.');
+      }
+    } else {
+      const w = sn.w, s = SOLS[st.sol];
+      const isTarget = s.row === w.r && s.cols.includes(w.c);
+      if (!isTarget) warn(s.boxName + ' 점선 상자 안의 홈에 넣자.');
+      else if (w.level >= 1) {}
+      else if (drag.d.amount <= 0.001) warn('먼저 스포이트로 용액을 빨아올리자.');
+      else {
+        const inc = dt / CFG.fillTime;
+        w.sol = st.sol; w.level = Math.min(1, w.level + inc);
+        drag.d.amount = Math.max(0, drag.d.amount - inc * .48);
+        drawWell(w); drawDropper(drag.d);
+        S.dropFx -= dt;
+        if (S.dropFx <= 0){ S.dropFx = .14; spawnDrop(COLX[w.c], ROWY[w.r] - 4, ROWY[w.r] + DEPTH - LEVEL * w.level, s.rgb); }
+        if (w.level >= 1){
+          w.E.lvl.style.display = 'none'; warn('점선 눈금까지 채웠다.');
+          if (s.cols.every(c => S.wells[s.row + '-' + c].level >= 1)) complete();
+        }
+      }
+    }
+  }
+
+  /* 반응 진행 */
+  Object.values(S.wells).forEach(w => {
+    if (!w.react || w.t0 === null || !w.strip || S.cleaned) return;
+    const raw = clamp((S.clock - w.t0) / CFG.reactSec, 0, 1);
+    const p = 1 - Math.pow(1 - raw, 1.6);
+    if (p - w.p > .002 || (raw >= 1 && w.p < 1)){ w.p = p; drawDeposit(w); drawWell(w); }
+  });
+
+  /* 경과 시간 */
+  if (S.firstT !== null && !S.timerStop){
+    const min = Math.floor((S.clock - S.firstT) / CFG.reactSec * CFG.realMinutes);
+    if (min !== S.lastMin){ S.lastMin = min; L.timerB.textContent = min; L.timer.setAttribute('visibility', 'visible'); }
+  }
+
+  /* 관찰 */
+  if (st.kind === 'obs' && !S.stepDone && S.zoom){
+    const mn = Math.min(...Object.values(S.wells).filter(w => w.react).map(w => w.p));
+    if (mn >= CFG.observeMin){ S.zoomTime += dt; if (S.zoomTime >= CFG.zoomNeed) complete(); }
+    else warn('반응이 진행될 때까지 조금 더 지켜보자.');
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ===== 처음부터 ===== */
+function resetAll(){
+  drag = null; stage.classList.remove('grabbing');
+  S = fresh();
+  svg.setAttribute('viewBox', VB_FULL.join(' '));
+  zoomBtn.textContent = '확대해서 보기'; zoomBtn.classList.remove('on');
+  $('sheet').classList.remove('open'); clearMarks();
+  document.querySelectorAll('.pi').forEach(n => n.classList.remove('done'));
+  document.querySelectorAll('.sf.gear').forEach(n => n.classList.remove('on'));
+  buildScene();
+  enterStep(0);
+}
+$('resetBtn').addEventListener('click', resetAll);
+
+buildTable();
+resetAll();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
