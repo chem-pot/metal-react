@@ -6,7 +6,7 @@
 <title>금속과 금속 염 수용액의 반응 관찰하기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@600;700&family=STIX+Two+Text:ital@1&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=Noto+Serif+KR:wght@500;600;700&family=STIX+Two+Text:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
   --mint:#5dc2b0; --mint-deep:#23907f; --mint-soft:#e3f5f1;
@@ -193,6 +193,71 @@ button:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
   .dotline{flex-basis:40px}
   .prog-end{flex-basis:40px}
 }
+/* ===== 공통 틀 (볼타 전지 기준으로 통일) ===== */
+.b1,.b2{font-weight:700;letter-spacing:-.02em}
+.b1{width:68px;height:68px;font-size:17px;position:relative;z-index:1}
+.b2{width:54px;height:54px;font-size:15px;color:#3b2f06;margin-left:-10px}
+.top{height:68px;margin-bottom:0}
+.dotline{flex:0 0 76px;height:4px;border:0;margin:0 8px;background:radial-gradient(circle,#b9c0bf 1.6px,transparent 2.1px) 0 0/8px 4px repeat-x}
+.prog{height:14px}
+.prog-track{height:10px;border-radius:6px;background:var(--line)}
+.prog-fill{border-radius:6px;transition:width .6s ease}
+.prog-knob{width:14px;height:14px;margin:-7px 0 0 -7px;background:var(--mint);border:0;box-shadow:none;transition:left .6s ease}
+.prog-end{flex:0 0 130px;height:10px;border-radius:6px;margin-left:12px}
+.body{grid-template-columns:230px minmax(0,1fr);gap:24px}
+.side{position:relative;padding:6px 0 0 30px;font-size:16px}
+.side::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:10px;border-radius:6px;background:var(--line)}
+.side h2{font-size:17px;font-weight:900;margin:8px 0 10px}
+.prep ul{gap:0;margin-bottom:18px}
+.prep li{line-height:1.4;padding:3px 0;gap:6px 16px}
+.safety{gap:4px}
+.sf{width:36px;height:36px}
+.sf svg{width:26px;height:26px}
+.sf.tox svg{width:36px;height:36px}
+.pi{gap:9px}
+.box{flex:0 0 20px;height:20px;border:1.8px solid var(--ink);border-radius:3px}
+.pi.done{color:inherit}
+.pi.done .box::after{width:10px;height:5px;border-left-width:2.6px;border-bottom-width:2.6px}
+.caution{margin-top:0;padding-top:12px;border-top:1.5px dashed var(--line)}
+.caution svg{width:24px;height:22px}
+.caution ul{gap:5px;font-size:14.5px}
+.caution li::before{background:var(--ink);top:.65em}
+.titlebox h1{font-size:28px;font-weight:900;letter-spacing:-.03em}
+.goal{font-weight:500;font-size:17px}
+.goal b{font-weight:900}
+.stage{border-width:1.5px}
+.pill{min-height:48px;padding:0 18px;border-radius:24px;border:2px solid var(--mint);background:var(--paper);color:var(--mint-deep);font-size:16px;font-weight:700}
+.pill:disabled{opacity:.3}
+#resetBtn{border-color:var(--line);color:var(--muted)}
+.toast{background:var(--paper);border:2px solid var(--mint);color:var(--mint-deep);font-weight:700;font-size:17px;padding:10px 22px;border-radius:26px;max-width:none;white-space:nowrap}
+.toast.show{opacity:1}
+.guide{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:20px;align-items:center;padding:14px 16px 14px 22px}
+.guide > :not(.next){grid-column:1}
+.ghead{gap:0}
+.tag{font-size:15px;padding:3px 14px;border-radius:14px}
+.count{margin-left:10px}
+.count b{color:inherit;font-weight:inherit}
+.stext{margin:8px 0 3px;gap:12px;font-size:22px}
+.snum{font-weight:900;font-size:24px;line-height:1.35;min-width:18px}
+.hint{font-size:15.5px;padding-left:30px}
+.next{grid-column:2;grid-row:1/4;margin:0;min-height:62px;min-width:156px;padding:0 26px;border-radius:31px;font-size:19px}
+.next.blink{animation:nudge 1.4s ease 2}
+@keyframes nudge{0%,100%{box-shadow:0 0 0 0 rgba(93,194,176,.55)}60%{box-shadow:0 0 0 12px rgba(93,194,176,0)}}
+@media (max-width:900px), (orientation:portrait){
+  .top{height:56px}
+  .b1{width:56px;height:56px;font-size:15px}.b2{width:46px;height:46px;font-size:13px}
+  .prog-end{flex-basis:60px}
+  .body{grid-template-columns:1fr;gap:12px}
+  .main{display:contents}
+  .titlebox{order:-1}
+  .side{padding:0 0 8px}
+  .side::before,.side h2,.safety{display:none}
+  .prep ul{margin:0}
+  .prep li{font-size:14.5px;padding:2px 0}
+  .guide{grid-template-columns:1fr}
+  .next{grid-column:1;grid-row:auto;justify-self:end;min-height:54px;margin-top:8px}
+  .stext{font-size:19px}
+}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
@@ -262,16 +327,16 @@ button:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
       <div class="stage" id="stage">
         <svg id="svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="실험대"></svg>
         <div class="sbtns tr">
+          <button class="pill" id="sheetBtn" hidden>결과 및 정리</button>
           <button class="pill" id="zoomBtn">확대해서 보기</button>
-          <button class="pill" id="sheetBtn" disabled>정리</button>
         </div>
         <div class="sbtns bl"><button class="pill" id="resetBtn">처음부터</button></div>
         <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
         <div class="sheet" id="sheet" aria-hidden="true">
           <div class="sheet-head">
-            <span class="tag mint">정리</span>
-            <button class="pill" id="sheetClose">닫기</button>
+            <span class="tag mint">결과 및 정리</span>
+            <button class="pill" id="sheetClose">장치 다시 보기</button>
           </div>
           <div class="sheet-body">
             <p class="q"><span class="qn">1</span><span>반응이 일어나는 홈에 ○표 하고, 화학 반응식을 써 보자.</span></p>
@@ -286,10 +351,10 @@ button:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
         <div class="ghead">
           <span class="tag gray" id="tag">준비</span>
           <span class="count"><b id="cur">1</b> / <span id="tot">12</span></span>
-          <button class="next" id="nextBtn">다음 단계</button>
         </div>
         <p class="stext"><span class="snum" id="snum">1</span><span id="stext"></span></p>
         <p class="hint" id="hint"></p>
+        <button class="next" id="nextBtn">다음 단계</button>
       </div>
     </main>
   </div>
@@ -316,8 +381,8 @@ const CFG = {
 /* ===== 단계 ===== */
 const STEPS = [
   {tag:'준비', cls:'gray', kind:'gear', text:'실험복, 보안경, 실험용 장갑을 착용한다.', hint:'실험대 위의 안전 장비를 하나씩 눌러 착용하자.', ok:'안전 장비를 모두 착용했다.'},
-  {tag:'준비', cls:'gray', kind:'move', text:'준비물을 실험대로 옮긴다.', hint:'선반 위의 준비물을 하나씩 눌러 실험대로 옮기자.', ok:'준비물을 모두 실험대로 옮겼다.'},
-  {tag:'준비', cls:'gray', kind:'sand', text:'금속판을 사포로 문질러 표면의 불순물을 제거한다.', hint:'사포를 끌어서 금속판 여섯 장 위를 여러 번 문질러 보자.', ok:'금속판 표면이 깨끗해졌다.'},
+  {tag:'준비', cls:'gray', kind:'move', text:'준비물을 실험대로 옮긴다.', hint:'선반 위의 준비물을 하나씩 눌러 실험대로 옮기자.', ok:'준비물을 모두 옮겼다.'},
+  {tag:'준비', cls:'gray', kind:'sand', text:'사포로 금속판을 문질러 표면의 불순물을 제거한다.', hint:'사포를 끌어서 금속판 여섯 장 위를 여러 번 문질러 보자.', ok:'금속판 표면이 깨끗해졌다.'},
   {tag:'과정 1', cls:'', kind:'sol', sol:'ZnSO4', text:'스포이트로 황산 아연 수용액을 분홍색 점선 상자 안의 두 홈에 넣는다.', hint:'병에 꽂힌 스포이트를 누르고 있어 용액을 빨아올린 뒤, 끌어서 홈 위에서 누르고 있어 점선 눈금까지 채우자.', ok:'황산 아연 수용액을 두 홈에 넣었다.'},
   {tag:'과정 2', cls:'', kind:'sol', sol:'CuSO4', text:'스포이트로 황산 구리(Ⅱ) 수용액을 노란색 점선 상자 안의 두 홈에 넣는다.', hint:'병에 꽂힌 스포이트를 누르고 있어 용액을 빨아올린 뒤, 끌어서 홈 위에서 누르고 있어 점선 눈금까지 채우자.', ok:'황산 구리(Ⅱ) 수용액을 두 홈에 넣었다.'},
   {tag:'과정 3', cls:'', kind:'sol', sol:'AgNO3', text:'스포이트로 질산 은 수용액을 파란색 점선 상자 안의 두 홈에 넣는다.', hint:'병에 꽂힌 스포이트를 누르고 있어 용액을 빨아올린 뒤, 끌어서 홈 위에서 누르고 있어 점선 눈금까지 채우자.', ok:'질산 은 수용액을 두 홈에 넣었다.'},
@@ -325,8 +390,8 @@ const STEPS = [
   {tag:'과정 5', cls:'', kind:'metal', metal:'Cu', text:'구리판을 Cu 세로줄에서 용액이 든 두 홈에 하나씩 넣는다.', hint:'구리판을 끌어서 홈 위에 놓아 보자. 가까이 가져가면 홈에 꽂힌다.', ok:'구리판을 두 홈에 넣었다.'},
   {tag:'과정 6', cls:'', kind:'metal', metal:'Zn', text:'아연판을 Zn 세로줄에서 용액이 든 두 홈에 하나씩 넣는다.', hint:'아연판을 끌어서 홈 위에 놓아 보자. 가까이 가져가면 홈에 꽂힌다.', ok:'아연판을 두 홈에 넣었다.'},
   {tag:'과정 7', cls:'', kind:'obs', text:'금속판 표면과 수용액의 변화를 관찰한다.', hint:'[확대해서 보기]를 눌러 여섯 개 홈의 금속판 표면과 용액의 색을 자세히 살펴보자.', ok:'금속판과 수용액의 변화를 관찰했다.'},
-  {tag:'정리', cls:'mint', kind:'sheet', text:'실험 결과를 정리한다.', hint:'오른쪽 표의 ( )를 눌러 반응이 일어나는 홈에 ○표 해 보자. 모두 맞히면 다음 단계로 넘어갈 수 있다.', ok:'반응이 일어나는 홈을 모두 찾았다.'},
-  {tag:'뒷정리', cls:'gray', kind:'clean', text:'실험 후 남은 용액은 폐수 처리 기준과 방법에 따라 처리한다.', hint:'폐수통을 눌러 남은 용액을 모으고 금속판을 정리하자.', ok:'실험대를 깨끗이 정리했다.'}
+  {tag:'결과 및 정리', cls:'mint', kind:'sheet', text:'실험 결과를 정리한다.', hint:'오른쪽 표의 ( )를 눌러 반응이 일어나는 홈에 ○표 해 보자. 모두 맞히면 다음 단계로 넘어갈 수 있다.', ok:'반응이 일어나는 홈을 모두 찾았다.'},
+  {tag:'뒷정리', cls:'gray', kind:'clean', text:'실험 후 남은 용액은 폐수 처리 기준과 방법에 따라 처리한다.', hint:'폐수통을 눌러 남은 용액을 처리하자.', ok:'뒷정리를 마쳤다.'}
 ];
 
 /* ===== 장치 배치 ===== */
@@ -680,7 +745,7 @@ function enterStep(i){
   const tag = $('tag'); tag.textContent = st.tag; tag.className = 'tag ' + (st.cls || '');
   $('cur').textContent = i + 1; $('tot').textContent = STEPS.length; $('snum').textContent = i + 1;
   $('stext').innerHTML = st.text; $('hint').innerHTML = st.hint;
-  nextBtn.classList.remove('ready', 'blink'); nextBtn.textContent = '다음 단계';
+  nextBtn.classList.remove('ready', 'blink'); nextBtn.textContent = i === STEPS.length - 1 ? '실험 끝' : '다음 단계';
   setProgress(i / STEPS.length);
 
   L.gear.classList.toggle('hid', i !== 0);
@@ -695,7 +760,8 @@ function enterStep(i){
   });
   L.metals.classList.toggle('hid', st.kind === 'clean');
   if (st.kind === 'clean'){ L.waste.classList.remove('hid'); L.zone.classList.add('hid'); if (S.zoom) setZoom(false); closeSheet(); }
-  sheetBtn.disabled = i < 10;
+  sheetBtn.hidden = st.kind !== 'sheet' && st.kind !== 'clean';
+  zoomBtn.disabled = i < 2;
   updateDraggables();
   if (st.kind === 'sheet'){ openSheet(); checkMarks(); }
 }
@@ -710,15 +776,22 @@ function complete(){
   S.stepDone = true;
   toast(STEPS[S.step].ok);
   nextBtn.classList.add('ready'); nextBtn.classList.remove('blink'); void nextBtn.offsetWidth; nextBtn.classList.add('blink');
-  setProgress((S.step + 1) / STEPS.length);
-  if (S.step === STEPS.length - 1){ S.finished = true; nextBtn.textContent = '처음부터 다시'; }
   updateDraggables();
 }
 nextBtn.addEventListener('click', () => {
   if (S.finished){ resetAll(); return; }
   if (!S.stepDone){ toast('이 단계를 먼저 마치자.'); return; }
-  enterStep(S.step + 1);
+  if (S.step < STEPS.length - 1) enterStep(S.step + 1); else finish();
 });
+function finish(){
+  S.finished = true;
+  setProgress(1);
+  const tag = $('tag'); tag.textContent = '완료'; tag.className = 'tag mint';
+  $('cur').parentNode.style.visibility = 'hidden'; $('snum').textContent = '';
+  $('stext').textContent = '금속과 금속 염 수용액의 반응 관찰하기 실험을 마쳤다.';
+  $('hint').textContent = '결과 및 정리를 모두 기록했는지 확인하자.';
+  nextBtn.textContent = '처음부터 다시';
+}
 
 /* ===== 누르기 ===== */
 svg.addEventListener('click', e => {
@@ -869,7 +942,7 @@ function cleanup(){
 /* ===== 확대 ===== */
 function setZoom(on){
   S.zoom = on;
-  zoomBtn.textContent = on ? '원래대로 보기' : '확대해서 보기';
+  zoomBtn.textContent = on ? '전체 보기' : '확대해서 보기';
   zoomBtn.classList.toggle('on', on);
   setView(on ? VB_ZOOM : VB_FULL);
 }
@@ -1029,6 +1102,7 @@ function resetAll(){
   S = fresh();
   svg.setAttribute('viewBox', VB_FULL.join(' '));
   zoomBtn.textContent = '확대해서 보기'; zoomBtn.classList.remove('on');
+  $('cur').parentNode.style.visibility = '';
   $('sheet').classList.remove('open'); clearMarks();
   document.querySelectorAll('.pi').forEach(n => n.classList.remove('done'));
   document.querySelectorAll('.sf.gear').forEach(n => n.classList.remove('on'));
